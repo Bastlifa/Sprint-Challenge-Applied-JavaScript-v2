@@ -51,3 +51,43 @@ function CarouselMaker()
 
 document.querySelector(".carousel-container").appendChild(CarouselMaker())
 
+//why am I not using a class for this.. feels weird
+function carouselAnimator()
+{
+  
+  let images = document.querySelector(".carousel").querySelectorAll("img");
+  let curIndex = 0
+  let curImg = images[curIndex];
+  curImg.style.display = "block";
+  let imgPrev = images[images.length - 1];
+  let imgNext = images[1];
+
+  let leftBtn = document.querySelector(".left-button")
+  let rightBtn = document.querySelector(".right-button")
+  leftBtn.addEventListener("click", e =>
+  {
+
+    let imageUpdate = function(index)
+    {
+      curImg.style.display = "none";
+      curIndex = curIndex === 0 ? images.length -1 : curIndex - 1;
+      curImg = images[curIndex];
+      imgPrev = curIndex === 0 ? images[images.length -1] : images[curIndex - 1];
+    }
+
+    let imgWidth = curImg.style.width;
+    imgPrev.style.display = "block";
+    
+    TweenMax.fromTo(curImg, 1, {x: 0}, {x:imgWidth, onComplete: _ => imageUpdate(curIndex)})
+    // TweenMax.set(imgPrev, {x: 0})
+    TweenMax.fromTo(imgPrev, 1, {x: -imgWidth}, {x:0})
+
+    
+
+    leftBtn.style.zIndex = 1;
+    rightBtn.style.zIndex = 1;
+  })
+
+}
+
+carouselAnimator();
