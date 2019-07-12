@@ -64,24 +64,40 @@ function carouselAnimator()
 
   let leftBtn = document.querySelector(".left-button")
   let rightBtn = document.querySelector(".right-button")
-  leftBtn.addEventListener("click", e =>
+  leftBtn.addEventListener("click", _ =>
   {
 
-    let imageUpdate = function(index)
-    {
-      curImg.style.display = "none";
-      curIndex = curIndex === 0 ? images.length -1 : curIndex - 1;
-      curImg = images[curIndex];
-      imgPrev = curIndex === 0 ? images[images.length -1] : images[curIndex - 1];
-    }
+    // let imageUpdate = function(index)
+    // {
+    //   curImg.style.display = "none";
+    //   curIndex = curIndex === 0 ? images.length -1 : curIndex - 1;
+    //   curImg = images[curIndex];
+    //   imgPrev = curIndex === 0 ? images[images.length -1] : images[curIndex - 1];
+    // }
 
-    let imgWidth = curImg.style.width;
-    imgPrev.style.display = "block";
+    // let imgWidth = curImg.style.width;
+    // TweenMax.fromTo(curImg, 1, {x: 0}, {x:imgWidth, onComplete: _ => imageUpdate(curIndex)})
     
-    TweenMax.fromTo(curImg, 1, {x: 0}, {x:imgWidth, onComplete: _ => imageUpdate(curIndex)})
-    // TweenMax.set(imgPrev, {x: 0})
-    TweenMax.fromTo(imgPrev, 1, {x: -imgWidth}, {x:0})
+    // TweenMax.fromTo(imgPrev, 1, {x: -imgWidth}, {x:0})
+    
+    curImg.style.display = "none"
+    imgPrev.style.display = "block";
+    curIndex = curIndex === 0 ? images.length -1 : curIndex - 1;
+    curImg = images[curIndex];
+    imgPrev = curIndex === 0 ? images[images.length -1] : images[curIndex - 1];
+    
 
+    leftBtn.style.zIndex = 1;
+    rightBtn.style.zIndex = 1;
+  });
+
+  rightBtn.addEventListener("click", _ =>
+  {
+    curImg.style.display = "none"
+    imgNext.style.display = "block";
+    curIndex = curIndex === images.length - 1 ? 0 : curIndex + 1;
+    curImg = images[curIndex];
+    imgNext = curIndex === images.length - 1 ? images[0] : images[curIndex + 1];
     
 
     leftBtn.style.zIndex = 1;
