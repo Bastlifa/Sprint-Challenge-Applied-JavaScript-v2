@@ -59,49 +59,41 @@ function carouselAnimator()
   let curIndex = 0
   let curImg = images[curIndex];
   curImg.style.display = "block";
-  let imgPrev = images[images.length - 1];
-  let imgNext = images[1];
 
   let leftBtn = document.querySelector(".left-button")
   let rightBtn = document.querySelector(".right-button")
+  leftBtn.style.zIndex = 1
+  rightBtn.style.zIndex = 1
   leftBtn.addEventListener("click", _ =>
   {
+    let imageWidth = curImg.width;
+    let prevIndex = curIndex === 0 ? images.length - 1 : curIndex -1
+    curImg = images[curIndex]
+    let prevImg = images[prevIndex];
+    prevImg.style.display = "block"
+    function onCompleteDisplayNone() { curImg.style.display = "none"; }
 
-    // let imageUpdate = function(index)
-    // {
-    //   curImg.style.display = "none";
-    //   curIndex = curIndex === 0 ? images.length -1 : curIndex - 1;
-    //   curImg = images[curIndex];
-    //   imgPrev = curIndex === 0 ? images[images.length -1] : images[curIndex - 1];
-    // }
+    TweenMax.fromTo(curImg, 0.7, {x:0, scale: 1, opacity: 1}, {x:imageWidth, scale:0.25, opacity: 0, onComplete: onCompleteDisplayNone});
+    TweenMax.fromTo(prevImg, 0.7, {x:-imageWidth, scale: 0.25, opacity:0}, {x:0, scale:1, opacity: 1});
 
-    // let imgWidth = curImg.style.width;
-    // TweenMax.fromTo(curImg, 1, {x: 0}, {x:imgWidth, onComplete: _ => imageUpdate(curIndex)})
+    curIndex = prevIndex;
     
-    // TweenMax.fromTo(imgPrev, 1, {x: -imgWidth}, {x:0})
-    
-    curImg.style.display = "none"
-    imgPrev.style.display = "block";
-    curIndex = curIndex === 0 ? images.length -1 : curIndex - 1;
-    curImg = images[curIndex];
-    imgPrev = curIndex === 0 ? images[images.length -1] : images[curIndex - 1];
-    
-
-    leftBtn.style.zIndex = 1;
-    rightBtn.style.zIndex = 1;
-  });
+  })
+  
 
   rightBtn.addEventListener("click", _ =>
   {
-    curImg.style.display = "none"
-    imgNext.style.display = "block";
-    curIndex = curIndex === images.length - 1 ? 0 : curIndex + 1;
-    curImg = images[curIndex];
-    imgNext = curIndex === images.length - 1 ? images[0] : images[curIndex + 1];
-    
+    let imageWidth = curImg.width;
+    curImg = images[curIndex]
+    let nextIndex = curIndex === images.length - 1 ? 0 : curIndex + 1
+    let nextImg = images[nextIndex];
+    nextImg.style.display = "block"
+    function onCompleteDisplayNone() { curImg.style.display = "none"; }
 
-    leftBtn.style.zIndex = 1;
-    rightBtn.style.zIndex = 1;
+    TweenMax.fromTo(curImg, 0.7, {x:0, scale: 1, opacity: 1}, {x:-imageWidth, scale:0.25, opacity: 0, onComplete: onCompleteDisplayNone});
+    TweenMax.fromTo(nextImg, 0.7, {x:imageWidth, scale: 0.25, opacity:0}, {x:0, scale:1, opacity: 1});
+
+    curIndex = nextIndex;
   })
 
 }
